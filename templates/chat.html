@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm p-4">
+      <h4>Sustainability Coach</h4>
+      <p class="text-muted">Ask a question and receive tailored guidance based on your latest carbon profile.</p>
+      <form method="post" class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Your question</label>
+          <input class="form-control" name="question" type="text" placeholder="How can I reduce my emissions?" required />
+        </div>
+        <div class="col-12">
+          <button class="btn btn-success" type="submit">Ask Coach</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm p-4">
+      <h5>AI Response</h5>
+      {% if response %}
+      <p>{{ response }}</p>
+      {% else %}
+      <p>Submit a question to receive personalized suggestions.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

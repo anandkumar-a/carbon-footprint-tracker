@@ -1,0 +1,369 @@
+:root {
+  color-scheme: light;
+  --sidebar: #198754;
+  --sidebar-dark: #146c43;
+  --main: #ffffff;
+  --surface: #f8fafb;
+  --surface-soft: #e9f7ee;
+  --surface-strong: #d1e7d7;
+  --brand: #198754;
+  --brand-soft: #d1e7d4;
+  --accent: #0f5132;
+  --accent-soft: #dbe9de;
+  --muted: #6c757d;
+  --text: #0f172a;
+  --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--main);
+  color: var(--text);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, var(--sidebar), var(--sidebar-dark));
+  color: #ffffff;
+  padding: 2rem 1.5rem;
+  border-right: none;
+}
+
+.sidebar-brand {
+  margin-bottom: 2rem;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+
+.sidebar-brand p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0.5rem 0 0;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.95);
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.sidebar-nav a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateX(4px);
+}
+
+.sidebar-nav a.active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  box-shadow: inset 4px 0 0 rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 0.95rem;
+}
+
+.page-content {
+  background: var(--main);
+}
+
+.topbar {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(25, 135, 84, 0.1);
+}
+
+.page-title {
+  font-size: 1.35rem;
+  margin-bottom: 0.25rem;
+}
+
+.page-subtitle {
+  color: var(--muted);
+}
+
+.card,
+.form-control,
+.btn,
+.list-group-item {
+  border-radius: 1.5rem;
+}
+
+.card {
+  border: none;
+  background: #ffffff;
+  box-shadow: var(--shadow);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.14);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #198754, #20c997);
+  border: none;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background: linear-gradient(135deg, #186e4f, #1fae82);
+}
+
+.btn-outline-success {
+  border-color: #198754;
+  color: #198754;
+}
+
+.btn-outline-success:hover {
+  background: rgba(25, 135, 84, 0.08);
+}
+
+.form-control,
+.form-select {
+  border-color: rgba(25, 135, 84, 0.18);
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.16);
+}
+
+.metric-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(25, 135, 84, 0.12), transparent 38%);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.hero-banner {
+  border-radius: 1.75rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(25, 135, 84, 0.14), rgba(25, 135, 84, 0.06));
+}
+
+.hero-title {
+  font-weight: 700;
+}
+
+.hero-copy {
+  color: #34434f;
+}
+
+.metric-pill {
+  border-radius: 999px;
+  background: rgba(25, 135, 84, 0.12);
+  color: #14532d;
+  font-weight: 600;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.slider-input {
+  accent-color: #20c997;
+}
+
+#previewBar {
+  transition: width 0.35s ease, background-color 0.35s ease;
+  background: linear-gradient(135deg, #198754, #20c997);
+}
+
+.chart-card {
+  perspective: 1000px;
+}
+
+.chart-card canvas {
+  transform: rotateX(5deg) rotateY(2deg);
+}
+
+@media (max-width: 991px) {
+  .app-shell {
+    display: block;
+  }
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+}
+
+.card,
+.form-control,
+.btn,
+.list-group-item {
+  border-radius: 1.25rem;
+}
+
+.card {
+  border: none;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 23px 70px rgba(15, 23, 42, 0.12);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #198754, #20c997);
+  border: none;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+  background: linear-gradient(135deg, #186e4f, #1fae82);
+}
+
+.btn-outline-success {
+  border-color: #198754;
+  color: #198754;
+}
+
+.btn-outline-success:hover {
+  background: rgba(25, 135, 84, 0.08);
+}
+
+.form-control,
+.form-select {
+  border-color: rgba(25, 135, 84, 0.18);
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.16);
+}
+
+.metric-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(25, 135, 84, 0.12), transparent 38%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.metric-card .card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.metric-value {
+  letter-spacing: -0.04em;
+}
+
+.feature-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(25, 135, 84, 0.08);
+  color: #14532d;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.progress {
+  height: 0.85rem;
+  border-radius: 999px;
+  background: #e7f3ea;
+}
+
+.progress-bar {
+  border-radius: 999px;
+}
+
+.hero-banner {
+  border-radius: 1.75rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(25, 135, 84, 0.12), rgba(25, 135, 84, 0.06));
+}
+
+.hero-title {
+  font-weight: 700;
+}
+
+.hero-copy {
+  color: #34434f;
+}
+
+.metric-pill {
+  border-radius: 999px;
+  background: rgba(25, 135, 84, 0.12);
+  color: #14532d;
+  font-weight: 600;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px);
+}
+
+.slider-input {
+  accent-color: #20c997;
+}
+
+#calculatorForm .badge {
+  font-size: 0.95rem;
+}
+
+#previewTotal,
+#previewScore {
+  color: #0f5132;
+}
+
+#previewBar {
+  transition: width 0.25s ease;
+  background: linear-gradient(135deg, #198754, #20c997);
+}
+
+.count-up {
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    padding: 1.75rem;
+  }
+}

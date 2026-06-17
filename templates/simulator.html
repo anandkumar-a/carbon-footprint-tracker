@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card shadow-sm p-4">
+      <h4>Why use the simulator?</h4>
+      <p class="text-muted">This page helps you test one change before you make it. You can see the carbon result of a different choice and decide if it is worth trying.</p>
+      <form method="post" class="row g-3">
+        <div class="col-12">
+          <label class="form-label">Scenario to change</label>
+          <select class="form-select" name="scenario" required>
+            <option value="transport">Transportation</option>
+            <option value="food">Food</option>
+            <option value="electricity">Electricity</option>
+            <option value="shopping">Shopping</option>
+            <option value="flight">Air Travel</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Transportation</label>
+          <select class="form-select" name="transport" required>
+            <option value="car">Car</option>
+            <option value="electric_vehicle">Electric Vehicle</option>
+            <option value="bus">Bus</option>
+            <option value="train">Train</option>
+            <option value="bicycle">Bicycle</option>
+            <option value="walking">Walking</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Food habits</label>
+          <select class="form-select" name="food" required>
+            <option value="mixed">Mixed Diet</option>
+            <option value="vegetarian">Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="heavy_meat">Heavy Meat</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Electricity use</label>
+          <select class="form-select" name="electricity" required>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Shopping</label>
+          <select class="form-select" name="shopping" required>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Air travel</label>
+          <select class="form-select" name="flight" required>
+            <option value="occasionally">Occasionally</option>
+            <option value="never">Never</option>
+            <option value="frequently">Frequently</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-success" type="submit">See the Change</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card shadow-sm p-4">
+      <h4>Simulation Results</h4>
+      {% if simulation %}
+      <p class="mb-1"><strong>Current monthly carbon:</strong> {{ simulation.current_total }} t</p>
+      <p class="mb-1"><strong>New estimate:</strong> {{ simulation.projected_total }} t</p>
+      <p class="mb-1"><strong>Possible savings:</strong> {{ simulation.savings }} t</p>
+      <p class="mb-1"><strong>Change amount:</strong> {{ simulation.reduction }}%</p>
+      <div class="mt-3">
+        <h6>Current top source</h6>
+        <p>{{ simulation.current.top_category }}</p>
+      </div>
+      {% else %}
+      <p>Use the form to save one change and see how your carbon amount could improve.</p>
+      {% endif %}
+    </div>
+    <div class="card shadow-sm p-4 mt-4">
+      <h5>Saved simulations</h5>
+      {% if saved_simulations %}
+      <ul class="list-group list-group-flush">
+        {% for sim in saved_simulations %}
+        <li class="list-group-item">
+          <strong>{{ sim.scenario|capitalize }}</strong>: saved {{ sim.savings }} t, {{ sim.reduction }}% change<br />
+          <small class="text-muted">{{ sim.created_at[0:10] }}</small>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No saved simulations yet. Each run is kept here automatically.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div class="row g-4 mt-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4 text-center">
+      <h5 class="mb-2">Why this works</h5>
+      <p class="small text-muted">The simulator helps you test one change before you try it in real life.</p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm p-4 text-center">
+      <h5 class="mb-2">Why we save it</h5>
+      <p class="small text-muted">Saved simulations let you compare changes later and remember what worked.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

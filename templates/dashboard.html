@@ -1,0 +1,190 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card metric-card shadow-sm p-4 h-100">
+          <div class="card-body">
+            <h6 class="text-uppercase text-muted mb-3">Carbon Score</h6>
+            <p class="display-5 fw-bold metric-value"><span class="count-up" data-target="{{ record.carbon_score if record else 0 }}">0</span></p>
+            <p class="mb-0">A higher score means a cleaner lifestyle.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card metric-card shadow-sm p-4 h-100">
+          <div class="card-body">
+            <h6 class="text-uppercase text-muted mb-3">Monthly CO₂ Emissions</h6>
+            <p class="display-5 fw-bold metric-value"><span class="count-up" data-target="{{ record.total_emission if record else 0 }}">0</span> t</p>
+            <p class="mb-0">Track your total emissions for this month.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card metric-card shadow-sm p-4 h-100">
+          <div class="card-body">
+            <h6 class="text-uppercase text-muted mb-3">Top Source</h6>
+            <span class="badge bg-success bg-opacity-10 text-success py-2 px-3">{{ record['top_category'] if record else 'N/A' }}</span>
+            <p class="mt-3 mb-0">Focus your next improvement on the area with the highest emissions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card metric-card shadow-sm p-4 h-100">
+          <div class="card-body">
+            <h6 class="text-uppercase text-muted mb-3">Total Actions Saved</h6>
+            <p class="display-5 fw-bold metric-value"><span class="count-up" data-target="{{ total_saved if total_saved else 0 }}">0</span> kg</p>
+            <p class="mb-0">Sustainability habits you have already logged.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card shadow-sm mt-4 chart-card">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Emission Breakdown</h5>
+          <span class="badge badge-soft">Top Source: {{ record['top_category'] if record else 'N/A' }}</span>
+        </div>
+        <canvas id="breakdownChart" height="250"></canvas>
+      </div>
+    </div>
+    <div class="card shadow-sm mt-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">Monthly Trend</h5>
+          <span class="text-muted">Last {{ labels|length }} entries</span>
+        </div>
+        <canvas id="trendChart" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm p-4 mb-4">
+      <h5 class="mb-3">AI Recommendations</h5>
+      {% if record %}
+      <p class="text-muted">Personal suggestions based on your latest footprint profile.</p>
+      <div class="mb-4">
+        <h6 class="mb-2">Easy Actions</h6>
+        <ul class="list-group list-group-flush">
+          {% for item in recommendations.easy %}
+          <li class="list-group-item border-0 ps-0">✅ {{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="mb-4">
+        <h6 class="mb-2">Medium Actions</h6>
+        <ul class="list-group list-group-flush">
+          {% for item in recommendations.medium %}
+          <li class="list-group-item border-0 ps-0">⚡ {{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div>
+        <h6 class="mb-2">Advanced Actions</h6>
+        <ul class="list-group list-group-flush">
+          {% for item in recommendations.advanced %}
+          <li class="list-group-item border-0 ps-0">🌱 {{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% else %}
+      <p>Run the calculator first to generate insights and recommendations.</p>
+      {% endif %}
+    </div>
+    <div class="card shadow-sm p-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h5 class="mb-0">Recent Actions</h5>
+          <small class="text-muted">Track your progress with every logged step.</small>
+        </div>
+        <span class="badge bg-success bg-opacity-10 text-success">Streak</span>
+      </div>
+      {% if actions %}
+      <ul class="list-group list-group-flush">
+        {% for action in actions %}
+        <li class="list-group-item border-0 ps-0">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <strong>{{ action.action_name }}</strong>
+              <div class="text-muted small">{{ action.completed_date }}</div>
+            </div>
+            <span class="badge bg-success bg-opacity-15 text-success">{{ action.carbon_saved }} kg</span>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No actions tracked yet. Add one in the tracker.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+const breakdownData = {{ breakdown|tojson }};
+const trendData = {{ trend|tojson }};
+const labels = {{ labels|tojson }};
+const breakdownCtx = document.getElementById("breakdownChart").getContext("2d");
+new Chart(breakdownCtx, {
+  type: "pie",
+  data: {
+    labels: Object.keys(breakdownData),
+    datasets: [{
+      data: Object.values(breakdownData),
+      backgroundColor: ["#198754", "#20c997", "#86efac", "#95d5b2", "#0f5132"],
+      borderColor: "#ffffff",
+      borderWidth: 2,
+      hoverOffset: 18,
+    }],
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 14, padding: 16 } },
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => `${context.label}: ${context.formattedValue} t`,
+        },
+      },
+    },
+  },
+});
+const trendCtx = document.getElementById("trendChart").getContext("2d");
+new Chart(trendCtx, {
+  type: "bar",
+  data: {
+    labels: labels,
+    datasets: [{
+      label: "Total CO₂ (t)",
+      data: trendData,
+      backgroundColor: "rgba(25, 135, 84, 0.55)",
+      borderColor: "#198754",
+      borderWidth: 1,
+      borderRadius: 10,
+      barPercentage: 0.6,
+    }],
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      tooltip: {
+        enabled: true,
+        callbacks: {
+          label: (context) => `${context.dataset.label}: ${context.formattedValue} t`,
+        },
+      },
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: {
+        beginAtZero: true,
+        grid: { color: 'rgba(15, 23, 42, 0.08)' },
+      },
+    },
+  },
+});
+</script>
+{% endblock %}

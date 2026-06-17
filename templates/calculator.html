@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card shadow-sm p-4">
+      <div class="card-body">
+        <h2 class="card-title">Easy Carbon Calculator</h2>
+        <p class="text-muted">Choose your habits below. Each answer is simple and helps the tool find what matters most.</p>
+        <p class="small text-muted mb-4">These questions focus on transport, food, electricity, shopping, and air travel because they are the everyday choices that most affect your carbon footprint. The calculator uses your answers to estimate where your emissions come from and highlight the best areas to improve.</p>
+        <form method="post" id="calculatorForm" class="row g-4">
+          <div class="col-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              <span>Transportation</span>
+              <span class="badge bg-success bg-opacity-10 text-success" id="transportLabel">Car</span>
+            </label>
+            <select class="form-select slider-input" id="transportSelect" data-name="transport" name="transport">
+              <option value="car">Car</option>
+              <option value="electric_vehicle">Electric Vehicle</option>
+              <option value="bus">Bus</option>
+              <option value="train">Train</option>
+              <option value="bicycle">Bicycle</option>
+              <option value="walking">Walking</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              <span>Food habits</span>
+              <span class="badge bg-success bg-opacity-10 text-success" id="foodLabel">Mixed Diet</span>
+            </label>
+            <select class="form-select slider-input" id="foodSelect" data-name="food" name="food">
+              <option value="mixed">Mixed Diet</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="vegan">Vegan</option>
+              <option value="heavy_meat">Heavy Meat</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              <span>Electricity use</span>
+              <span class="badge bg-success bg-opacity-10 text-success" id="electricityLabel">Medium</span>
+            </label>
+            <select class="form-select slider-input" id="electricitySelect" data-name="electricity" name="electricity">
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              <span>Shopping</span>
+              <span class="badge bg-success bg-opacity-10 text-success" id="shoppingLabel">Medium</span>
+            </label>
+            <select class="form-select slider-input" id="shoppingSelect" data-name="shopping" name="shopping">
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <label class="form-label d-flex justify-content-between align-items-center">
+              <span>Air travel</span>
+              <span class="badge bg-success bg-opacity-10 text-success" id="flightLabel">Occasionally</span>
+            </label>
+            <select class="form-select slider-input" id="flightSelect" data-name="flight" name="flight">
+              <option value="occasionally">Occasionally</option>
+              <option value="never">Never</option>
+              <option value="frequently">Frequently</option>
+            </select>
+          </div>
+          <div class="col-12">
+            <button class="btn btn-success btn-lg w-100" type="submit">Get Your Estimate</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card shadow-sm p-4">
+      <div class="card-body">
+        <h5 class="mb-3">Why these questions?</h5>
+        <p class="text-muted">We ask about five daily choices so we can show which one creates the most carbon. That helps you focus on the easiest changes first.</p>
+        <div class="mt-4">
+          <h6>Live preview</h6>
+          <p class="small text-muted">The preview shows your score and top source before you submit.</p>
+          <div class="mb-3 d-flex justify-content-between align-items-start">
+            <div>
+              <small class="text-muted">Total CO₂</small>
+              <p class="display-6 mb-0" id="previewTotal">0.0</p>
+            </div>
+            <div class="text-end">
+              <small class="text-muted">Score</small>
+              <p class="display-6 mb-0" id="previewScore">0</p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <small class="text-muted">Top source</small>
+            <p class="fs-5 fw-semibold" id="previewTopSource">Transportation</p>
+          </div>
+          <div class="progress mb-3">
+            <div class="progress-bar" role="progressbar" id="previewBar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <p class="text-muted small">Change a setting and the score updates immediately so you can choose better options.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

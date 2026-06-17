@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="hero-banner mb-5 p-4 p-lg-5 shadow-lg fade-in">
+  <div class="row align-items-center">
+    <div class="col-lg-7">
+      <span class="feature-badge mb-3">Simple and clear</span>
+      <h1 class="hero-title display-5 fw-bold">Understand your daily carbon habits.</h1>
+      <p class="hero-copy fs-5 mt-4">This tool helps you see what part of your life creates the most carbon and how to make easy changes.</p>
+      <div class="mt-4 d-flex flex-column flex-sm-row gap-3">
+        <a class="btn btn-success btn-lg px-4" href="{{ url_for('calculator') }}">Open Calculator</a>
+        <a class="btn btn-outline-success btn-lg px-4" href="{{ url_for('dashboard') }}">View Dashboard</a>
+      </div>
+    </div>
+    <div class="col-lg-5 mt-4 mt-lg-0">
+      <div class="card card-body bg-surface-soft border-0 text-center shadow-sm">
+        <h3 class="mb-3">How it helps</h3>
+        <p class="mb-4">You can quickly check travel, food, electricity, shopping, and flying. Then use the coach to learn small steps that add up.</p>
+        <div class="d-flex justify-content-between gap-3 flex-wrap">
+          <span class="metric-pill">Easy steps</span>
+          <span class="metric-pill">Clear advice</span>
+          <span class="metric-pill">Track habits</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card interactive-card shadow-sm p-4 h-100">
+      <div class="card-body">
+        <h5 class="mb-3">Calculator</h5>
+        <p>Pick simple choices to see how your day-to-day habits affect your carbon amount.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card interactive-card shadow-sm p-4 h-100">
+      <div class="card-body">
+        <h5 class="mb-3">Simulator</h5>
+        <p>Try a change and see how much carbon you could save before you do it.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card interactive-card shadow-sm p-4 h-100">
+      <div class="card-body">
+        <h5 class="mb-3">Tracker</h5>
+        <p>Note good actions and watch your carbon savings grow over time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
