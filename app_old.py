@@ -1,4 +1,4 @@
-import os
+﻿import os
 import sqlite3
 from datetime import datetime
 
@@ -113,6 +113,7 @@ def about():
 @app.route('/calculator', methods=['GET', 'POST'])
 def calculator():
     init_db()
+    errors = []
     if request.method == 'POST':
         form_data = request.form.to_dict()
         errors = validate_calculator_input(form_data)
